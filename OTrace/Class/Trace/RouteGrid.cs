@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OTrace.Class.Trace {
+    /// <summary>
+    /// Сетка с занятими дорожкой клетками
+    /// </summary>
     internal class RouteGrid {
         public bool[,] routeGrid;
 

@@ -37,6 +37,7 @@
             this.mousePosL = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.infoRB = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -62,6 +63,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1111, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // открытьToolStripMenuItem
             // 
@@ -94,7 +96,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComponentTree.Location = new System.Drawing.Point(3, 27);
             this.ComponentTree.Name = "ComponentTree";
-            this.ComponentTree.Size = new System.Drawing.Size(193, 337);
+            this.ComponentTree.Size = new System.Drawing.Size(193, 280);
             this.ComponentTree.TabIndex = 3;
             // 
             // splitContainer1
@@ -115,8 +117,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.showGridBox);
             this.splitContainer1.Panel2.Controls.Add(this.showPlateBox);
-            this.splitContainer1.Size = new System.Drawing.Size(201, 629);
-            this.splitContainer1.SplitterDistance = 369;
+            this.splitContainer1.Size = new System.Drawing.Size(201, 532);
+            this.splitContainer1.SplitterDistance = 312;
             this.splitContainer1.TabIndex = 5;
             // 
             // labelComponents
@@ -210,11 +212,20 @@
             this.numericUpDown1.Size = new System.Drawing.Size(200, 29);
             this.numericUpDown1.TabIndex = 9;
             // 
+            // infoRB
+            // 
+            this.infoRB.Location = new System.Drawing.Point(12, 641);
+            this.infoRB.Name = "infoRB";
+            this.infoRB.Size = new System.Drawing.Size(197, 91);
+            this.infoRB.TabIndex = 10;
+            this.infoRB.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 787);
+            this.Controls.Add(this.infoRB);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.mousePosL);
@@ -256,6 +267,7 @@
         private System.Windows.Forms.CheckBox showPlateBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.RichTextBox infoRB;
     }
 }
 

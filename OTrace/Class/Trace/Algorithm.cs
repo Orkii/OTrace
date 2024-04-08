@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OTrace.Class.Trace {
     internal class Algorithm {
@@ -36,6 +38,8 @@ namespace OTrace.Class.Trace {
         }; 
         public AlgoritmSettins settings;
 
+        public RichTextBox infoRB;
+
         public Plate plate;
         public Grid grid;
 
@@ -51,7 +55,7 @@ namespace OTrace.Class.Trace {
 
             initNetList();
         }
-
+        bool inWork = false; // Для отрисовки
         public void paint(object sender, PaintEventArgs e, Vector3 panelOffset) {
             toDraw = (Panel)sender;
             if (settings.showPlate == true) {
@@ -61,10 +65,14 @@ namespace OTrace.Class.Trace {
                 grid.paint(sender, e, panelOffset);
             }
 
+            if (inWork == true) return;
+
+            int c = 0; // Для разных цветов
             foreach (Net net in netList) {
                 if (net.routePoints.Count != 0) {
-                    foreach(Point routePoint in net.routePoints)
-                    e.Graphics.FillEllipse(new SolidBrush(Color.Blue),
+                    c++;  // Для разных цветов
+                    foreach (Point routePoint in net.routePoints)
+                    e.Graphics.FillEllipse(new SolidBrush(colors[c]),
                         (float)(panelOffset.X + (routePoint.X * grid.cellSize) * panelOffset.Z),
                         (float)(panelOffset.Y + ((Panel)sender).Size.Height - (routePoint.Y * grid.cellSize) * panelOffset.Z),
                         (float)grid.cellSize * panelOffset.Z,
@@ -105,6 +113,7 @@ namespace OTrace.Class.Trace {
                     e.Graphics.DrawLine(new Pen(Color.Green), p1, p2);
                 }
             }
+            /* // Рисованеи Проверенных клеток
             if (sortedList != null) {
                 Point[] ppp = new Point[sortedList.alreadyUsed.Keys.Count*2];
                 sortedList.alreadyUsed.Keys.CopyTo(ppp, 0);
@@ -116,6 +125,7 @@ namespace OTrace.Class.Trace {
                         (float)grid.cellSize * panelOffset.Z);
                 }
             }
+            */
             if (nowPoint != null) {
                 e.Graphics.FillEllipse(new SolidBrush(Color.Orange),
                     (float)(panelOffset.X + (nowPoint.X * grid.cellSize - grid.cellSize / 2) * panelOffset.Z),
@@ -150,42 +160,217 @@ namespace OTrace.Class.Trace {
 
         }
 
-        StashGrid stashGrid;
-        SortedListP sortedList;
+        //StashGrid stashGrid;
+        
         Point nowPoint;
         public void alg(int netID = -1) {
-            if (stashGrid == null) {
-                stashGrid = new StashGrid(grid);
-                stashGrid.grid = grid;
-            }
+            clearInfoText();
 
-            if (netID == -1) {
-                foreach (Net net in netList) {
-                    if (net.id != -1) {
-                        findSingleRoute(net.id);
+            writeInfoText("общее количество сетей = " + netList.Count);
+
+            StashGrid stashGrid = new StashGrid(grid);
+            stashGrid.grid = grid;
+            bool able = true;
+            foreach(Net net in netList) {       // Проверка возможности каждой отдельной
+                if (net.id != -1) {
+                    if (findMultyRoute(stashGrid.clone(), net) == false) {
+                        able = false;
+                        writeInfoText("Невозможно провести путь " + net.id);
                     }
+                    net.routePoints.Clear();
+                    //findSingleRoute(stashGrid, net.id);
                 }
             }
-            else {
-                findSingleRoute(netID);
+            if (able == false) return;
+            else writeInfoText("Поиск пути");
+            inWork = true;
+            if (netID == -1) {
+                recursiveRouteFinder(stashGrid, netList);
+                /*
+                foreach (Net net in netList) {
+                    if (net.id != -1) {
+                        findMultyRoute(stashGrid, net);
+                        //findSingleRoute(stashGrid, net.id);
+                    }
+                }
+                */
             }
+            else {
+                foreach (Net net in netList) {
+                    if (net.id == netID) {
+                        findMultyRoute(stashGrid, net);
+                    }
+                }
+                //findSingleRoute(netID);
+            }
+            Console.WriteLine("DONE");
+            inWork = false;
+            toDraw.Invalidate();
         }
-        public bool findSingleRoute(int netID) {
+        int deep = 0;
+        private bool recursiveRouteFinder(StashGrid stashGrid, List<Net> nets) {
+            //clearInfoText();
+            writeInfoText(deep.ToString() + " ");
+            deep++;
+            List<Net> wasTry = new List<Net>(); // Эти сети были попробываны 
+
+
+            Dictionary<Net, List<Point>> temp1 = new Dictionary<Net, List<Point>>();
+            Dictionary<Net, StashGrid>   temp2 = new Dictionary<Net, StashGrid>();
+
+            foreach (Net item in nets) {
+                StashGrid sg = stashGrid.clone();
+                if (findMultyRoute(sg, item) == false) {
+                    deep--;
+                    return false;
+                }
+                else {
+                    temp1.Add(item, item.routePoints);
+                    temp2.Add(item, sg);
+                }
+            }
+
+            Net nowNet; // Сеть которая сейчас в рекурсии
+
+            while (nets.Count != 0) {
+                nowNet = nets.First(); 
+                nets.Remove(nowNet);
+
+                StashGrid stashGridNewState;
+                temp2.TryGetValue(nowNet, out stashGridNewState);
+                temp1.TryGetValue(nowNet, out nowNet.routePoints);
+
+                List<Net> tempList = new List<Net>();
+                tempList.AddRange(nets);
+                tempList.AddRange(wasTry);
+
+                if (recursiveRouteFinder(stashGridNewState, tempList) == true) {
+                    deep--;
+                    return true;
+                }
+
+                nowNet.routePoints.Clear();
+                wasTry.Add(nowNet);
+
+                /*
+                StashGrid stashGridNewState = stashGrid.clone();
+                if (findMultyRoute(stashGridNewState, nowNet) == false) {
+                    deep--;
+                    return false;
+                }
+                else {
+                    List<Net> tempList = new List<Net>();
+                    tempList.AddRange(nets);
+                    tempList.AddRange(wasTry);
+                    if (recursiveRouteFinder(stashGridNewState, tempList) == true) {
+                        deep--;
+                        return true;
+                    }
+                    nowNet.routePoints.Clear();
+                    wasTry.Add(nowNet);
+                }
+                */
+
+            }
+            deep--;
+            return false;
+        }
+
+        /// <summary>
+        /// находит путь для всей сети
+        /// </summary>
+        /// <param name="netID"></param>
+        /// <returns></returns>
+        public bool findMultyRoute(StashGrid stashGrid, Net net) {
+            List<Point> ps = net.pads[0].cellUsageL;
+            for (int i = 1; i < net.pads.Count; i++) {
+                List<Point>  newPs = findWayFromArrToArr(stashGrid, ps, net.pads[i].cellUsageL);
+                if (newPs == null) return false;
+                else ps = newPs;
+            }
+
+            net.routePoints = ps;
+            RouteGrid gr = new RouteGrid(ps, grid.padGrid.GetLength(0), grid.padGrid.GetLength(1));
+            stashGrid.addRouteGrid(gr);
+            
+            toDraw.Invalidate();
+            return true;
+        }
+        /// <summary>
+        /// Находит путь от кучи точек до другой. stashGrid - Поле на котором проводится, 
+        /// </summary>
+        /// <param name="netID"></param>
+        /// <returns>null = Пути нет.</returns>
+        public List<Point> findWayFromArrToArr(StashGrid stashGrid, List<Point> ps1, List<Point> ps2) {
+            SortedListP sortedList = new SortedListP(ps2);
+
+            foreach (Point a in ps1) {
+                sortedList.add(a, 0);
+            }
+            bool foundWay = false;
+            PointWithDist lastCell = null;
+
+            while (foundWay == false) {
+                PointWithDist p = sortedList.pickD();
+                if (p == null) {
+                    return null;
+                }
+
+                Point[] ps = {// Соседние клетки
+                    new Point(p.point.X + 1, p.point.Y),
+                    new Point(p.point.X - 1, p.point.Y),
+                    new Point(p.point.X, p.point.Y + 1),
+                    new Point(p.point.X, p.point.Y - 1)
+                };
+                foreach (Point a in ps) {
+                    if ((a.X == -1) || (a.Y == -1) || (a.Y >= grid.height) || (a.Y >= grid.width)) continue; // Выходят за границы
+
+                    foreach (Point b in ps2) {
+                        if ((a.X == b.X) && (a.Y == b.Y)) {
+                            Console.WriteLine("Found Way");                             // Нашли путь
+                            int distance = Math.Abs(sortedList.destination[0].X - a.X) + Math.Abs(sortedList.destination[0].Y - a.Y);
+                            lastCell = new PointWithDist(a, distance, p.routeLeng + 1, p);
+                            foundWay = true;
+                        }
+                    }
+                    if (stashGrid.isOccupied(a.X, a.Y) == false) {                      // Если в клетке ничего нет
+                        if (sortedList.alreadyUsed.ContainsKey(a) == false) {           // И дорожек текущего шага тоже
+                            sortedList.add(new Point(a.X, a.Y), p.routeLeng + 1, p);    // Добовляем возможный путь
+                        }
+                        else {
+                            PointWithDist usedDot = null;
+                            sortedList.alreadyUsed.TryGetValue(a, out usedDot);         // Иначе
+                            if (usedDot.routeLeng > p.routeLeng + 1) {                  // Если текущий путь короче
+                                sortedList.remove(a);                                   // Заменяем
+                                sortedList.add(new Point(a.X, a.Y), p.routeLeng + 1, p);
+                            }
+                        }
+                    }
+
+                }
+            }
+            // Обратный поиск
+            List<Point> routeList = new List<Point>();
+
+            while (lastCell.prevPoint != null) {
+                routeList.Add(lastCell.point);
+                lastCell = lastCell.prevPoint;
+            }
+            routeList.AddRange(ps1);
+            routeList.AddRange(ps2);
+            return routeList;
+        }
+        public bool findSingleRoute(StashGrid stashGrid, int netID) {
             Net net = netList[netID];
 
             Pad pad1 = net.pads[0];
             Pad pad2 = net.pads[1];
-
+             
             //RouteGrid routeGrid = new RouteGrid();
-
-            sortedList = new SortedListP(pad2.cellUsageL[0]);
+            SortedListP sortedList = new SortedListP(pad2.cellUsageL);
             foreach (Point a in pad1.cellUsageL) {
                 sortedList.add(a, 0);
             }
-
-
-            //sortedList.add(pad1.cellUsageL[0], 0);
-            //sortedList.add(pad1.cellUsageL[0], 0);
 
             bool foundWay = false;
             PointWithDist lastCell = null;
@@ -198,7 +383,7 @@ namespace OTrace.Class.Trace {
                 nowPoint = p.point;
 
 
-                Point[] ps = {
+                Point[] ps = {// Соседние клетки
                     new Point(p.point.X + 1, p.point.Y),
                     new Point(p.point.X - 1, p.point.Y),
                     new Point(p.point.X, p.point.Y + 1),
@@ -206,29 +391,29 @@ namespace OTrace.Class.Trace {
                 };
 
                 foreach (Point a in ps) {
-                    if ((a.X == -1) || (a.Y == -1) || (a.Y >= grid.height) || (a.Y >= grid.width)) continue;
+                    if ((a.X == -1) || (a.Y == -1) || (a.Y >= grid.height) || (a.Y >= grid.width)) continue; // Выходят за границы
 
                     foreach (Point b in pad2.cellUsageL) {
                         if ((a.X == b.X) && (a.Y == b.Y)) {
-                            Console.WriteLine("Found Way");
+                            Console.WriteLine("Found Way");                             // Нашли путь
 
-                            
-                            int distance = Math.Abs(sortedList.destination.X - a.X) + Math.Abs(sortedList.destination.Y - a.Y);
+
+                            int distance = Math.Abs(sortedList.destination[0].X - a.X) + Math.Abs(sortedList.destination[0].Y - a.Y);
                             lastCell = new PointWithDist(a, distance, p.routeLeng + 1, p);
 
                             foundWay = true;
                         }
                     }
 
-                    if (stashGrid.isOccupied(a.X, a.Y) == false) {
-                        if (sortedList.alreadyUsed.ContainsKey(a) == false) {
-                            sortedList.add(new Point(a.X, a.Y), p.routeLeng + 1, p);
+                    if (stashGrid.isOccupied(a.X, a.Y) == false) {                      // Если в клетке ничего нет
+                        if (sortedList.alreadyUsed.ContainsKey(a) == false) {           // И дорожек текущего шага тоже
+                            sortedList.add(new Point(a.X, a.Y), p.routeLeng + 1, p);    // Добовляем возможный путь
                         }
                         else {
                             PointWithDist usedDot = null;
-                            sortedList.alreadyUsed.TryGetValue(a, out usedDot);
-                            if (usedDot.routeLeng > p.routeLeng + 1) {
-                                sortedList.remove(a);
+                            sortedList.alreadyUsed.TryGetValue(a, out usedDot);         // Иначе
+                            if (usedDot.routeLeng > p.routeLeng + 1) {                  // Если текущий путь короче
+                                sortedList.remove(a);                                   // Заменяем
                                 sortedList.add(new Point(a.X, a.Y), p.routeLeng + 1, p);
                             }
                         }
@@ -260,5 +445,29 @@ namespace OTrace.Class.Trace {
 
             return true;
         }
+        public void writeInfoText(string text) {
+            if (infoRB.InvokeRequired) {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { writeInfoText($"{text}"); };
+                infoRB.Invoke(safeWrite);
+            }
+            else
+                infoRB.AppendText(text);
+        }
+        public void clearInfoText() {
+            if (infoRB.InvokeRequired) {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { clearInfoText(); };
+                infoRB.Invoke(safeWrite);
+            }
+            else
+                infoRB.Clear();
+        }
     }
+
+
+
+
+
+
 }

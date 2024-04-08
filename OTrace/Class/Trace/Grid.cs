@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OTrace.Class.Trace {
+    /// <summary>
+    /// Плата как куча клеточек
+    /// </summary>
     internal class Grid {
+        /// <summary>
+        /// 
+        /// </summary>
         public bool[,] padGrid;
-        public bool[,] routeGrid;
         public double cellSize;
         Plate plate;
-        public bool this[int i, int j] {
-            get {
-                return padGrid[i,j] || routeGrid[i, j];
-            }
-        }
+
 
         public int height { get => padGrid.GetLength(0); }
         public int width  { get => padGrid.GetLength(1); }
@@ -28,6 +29,7 @@ namespace OTrace.Class.Trace {
         public Grid(Plate plate_) {
             plate = plate_;
             makeGrid();
+
         }
 
         public void makeGrid(double cellSize_ = 0.1) {//////////////

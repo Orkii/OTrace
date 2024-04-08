@@ -6,22 +6,33 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OTrace.Class.Trace {
+    /// <summary>
+    /// Список сортирующий клеточки по какой-то метрике
+    /// </summary>
     internal class SortedListP {
         public List<PointWithDist> pointsD;
 
-        public Point destination;
+        public List<Point> destination;
 
         public Dictionary<Point, PointWithDist> alreadyUsed;
 
-        public SortedListP(Point destination_) {
+        public SortedListP(List<Point> destination_) {
             destination = destination_;
             List<Point> points = new List<Point>();
 
             alreadyUsed = new Dictionary<Point, PointWithDist>();
             pointsD = new List<PointWithDist>();
         }
+        /// <summary>
+        /// point - Координаты.
+        /// routeLeng - Расстояние до клетки.
+        /// pointWithDist_ - Предидущая клетка.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="routeLeng"></param>
+        /// <param name="pointWithDist_"></param>
         public void add(Point point, int routeLeng, PointWithDist pointWithDist_ = null) { 
-            int distance = Math.Abs(destination.X - point.X) + Math.Abs(destination.Y - point.Y);
+            int distance = Math.Abs(destination[0].X - point.X) + Math.Abs(destination[0].Y - point.Y);
             PointWithDist p = new PointWithDist(point, distance, routeLeng, pointWithDist_);
             insert(p);
 
@@ -76,6 +87,10 @@ namespace OTrace.Class.Trace {
             pointsD.RemoveAt(0);
             return a;
         }
+        /// <summary>
+        /// Возвращает лучшую клетку
+        /// </summary>
+        /// <returns></returns>
         public PointWithDist pickD() {
             if (pointsD.Count == 0) return null;
             PointWithDist a = pointsD[0];
@@ -85,7 +100,9 @@ namespace OTrace.Class.Trace {
 
     }
 
-
+    /// <summary>
+    /// Описывает клетку во время нахлждения пути
+    /// </summary>
     class PointWithDist {
         public PointWithDist prevPoint;
         public PointWithDist(Point point_, int distance_, int routeLeng_, PointWithDist prevPoint_ = null) {

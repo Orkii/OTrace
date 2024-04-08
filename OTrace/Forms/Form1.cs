@@ -119,6 +119,7 @@ namespace OTrace {
             plate = new Plate(componentList, board);
             
             algorithm = new Algorithm(plate);
+            algorithm.infoRB = infoRB;
             drawComponentTree();
         }
 
@@ -197,6 +198,10 @@ namespace OTrace {
             }));
             th.Start();
             
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+
         }
     }
 }

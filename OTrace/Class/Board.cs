@@ -10,9 +10,15 @@ using System.Windows.Forms;
 using System.Xml;
 
 namespace OTrace.Class {
+    /// <summary>
+    /// Плата как её размеры
+    /// </summary>
     internal class Board {
         public Vector2 size;
         XmlElement xml;
+        /// <summary>
+        /// Границы платы
+        /// </summary>
         List<PointF> points;
         public Board(XmlElement xml_) {
             xml = xml_;
