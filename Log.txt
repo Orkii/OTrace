@@ -1,91 +1,126 @@
-[08.04.2024 18:08:27] Open File to read data E:\Диплом\Plate\Empty.dipxml
-[08.04.2024 18:08:27] Try parse padStyle
-[08.04.2024 18:08:27] Try parse Patterns
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created PatType1 - MtHole
-[08.04.2024 18:08:27] Created PatType2 - CON_4
-[08.04.2024 18:08:27] Created PatType3 - CON_6
-[08.04.2024 18:08:27] Created PatType4 - SOT23-3P95_230X110L30X43N
-[08.04.2024 18:08:27] Created PatType5 - RES_0805
-[08.04.2024 18:08:27] Created PatType6 - SOIC16P127_1000X600X175L64X41L
-[08.04.2024 18:08:27] Created PatType7 - PatType7
-[08.04.2024 18:08:27] Created PatType8 - PatType8
-[08.04.2024 18:08:27] Created PatType9 - RES_0805
-[08.04.2024 18:08:27] Created PatType10 - 0805
-[08.04.2024 18:08:27] Created PatType11 - CON_8_UNO
-[08.04.2024 18:08:27] Try parseComponents
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created C1 - CAP
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created C2 - CAP
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created C3 - CAP
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created C4 - CAP
-[08.04.2024 18:08:27] Created PatType0 - 0805
-[08.04.2024 18:08:27] Created C5 - CAP
-[08.04.2024 18:08:27] Created PatType1 - MtHole
-[08.04.2024 18:08:27] Created Hole1 - MtHole
-[08.04.2024 18:08:27] Created PatType1 - MtHole
-[08.04.2024 18:08:27] Created Hole2 - MtHole
-[08.04.2024 18:08:27] Created PatType2 - CON_4
-[08.04.2024 18:08:27] Created J1 - CON_4M
-[08.04.2024 18:08:27] Created PatType3 - CON_6
-[08.04.2024 18:08:27] Created J2 - CON_6M
-[08.04.2024 18:08:27] Created PatType4 - SOT23-3P95_230X110L30X43N
-[08.04.2024 18:08:27] Created Q1 - TRANSISTOR_PNP
-[08.04.2024 18:08:27] Created PatType5 - RES_0805
-[08.04.2024 18:08:27] Created R1 - RES_0805
-[08.04.2024 18:08:27] Created PatType5 - RES_0805
-[08.04.2024 18:08:27] Created R2 - RES_0805
-[08.04.2024 18:08:27] Created PatType5 - RES_0805
-[08.04.2024 18:08:27] Created R3 - RES_0805
-[08.04.2024 18:08:27] Created PatType5 - RES_0805
-[08.04.2024 18:08:27] Created R4 - RES_0805
-[08.04.2024 18:08:27] Created PatType6 - SOIC16P127_1000X600X175L64X41L
-[08.04.2024 18:08:27] Created U1 - HX711
-[08.04.2024 18:08:27] Try parseBoard
-[08.04.2024 18:08:27] CAP Fill grid
-[08.04.2024 18:08:27] CAP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] CAP Fill grid
-[08.04.2024 18:08:27] CAP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] CAP Fill grid
-[08.04.2024 18:08:27] CAP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] CAP Fill grid
-[08.04.2024 18:08:27] CAP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] CAP Fill grid
-[08.04.2024 18:08:27] CAP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] MtHole Fill grid
-[08.04.2024 18:08:27] MtHole Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] MtHole Fill grid
-[08.04.2024 18:08:27] MtHole Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] CON_4M Fill grid
-[08.04.2024 18:08:27] CON_4M Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] 3 Pad Fill grid
-[08.04.2024 18:08:27] 4 Pad Fill grid
-[08.04.2024 18:08:27] CON_6M Fill grid
-[08.04.2024 18:08:27] CON_6M Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.04.2024 18:08:27] 2 Pad Fill grid
-[08.04.2024 18:08:27] 3 Pad Fill grid
-[08.04.2024 18:08:27] 4 Pad Fill grid
-[08.04.2024 18:08:27] 5 Pad Fill grid
-[08.04.2024 18:08:27] 6 Pad Fill grid
-[08.04.2024 18:08:27] TRANSISTOR_PNP Fill grid
-[08.04.2024 18:08:27] TRANSISTOR_PNP Component Fill grid
-[08.04.2024 18:08:27] 1 Pad Fill grid
-[08.
+[11.04.2024 16:46:16] Open File to read data E:\Диплом\Plate\Empty.dipxml
+[11.04.2024 16:46:16] Try parse padStyle
+[11.04.2024 16:46:16] Try parse Patterns
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created PatType1 - MtHole
+[11.04.2024 16:46:16] Created PatType2 - CON_4
+[11.04.2024 16:46:16] Created PatType3 - CON_6
+[11.04.2024 16:46:16] Created PatType4 - SOT23-3P95_230X110L30X43N
+[11.04.2024 16:46:16] Created PatType5 - RES_0805
+[11.04.2024 16:46:16] Created PatType6 - SOIC16P127_1000X600X175L64X41L
+[11.04.2024 16:46:16] Created PatType7 - PatType7
+[11.04.2024 16:46:16] Created PatType8 - PatType8
+[11.04.2024 16:46:16] Created PatType9 - RES_0805
+[11.04.2024 16:46:16] Created PatType10 - 0805
+[11.04.2024 16:46:16] Created PatType11 - CON_8_UNO
+[11.04.2024 16:46:16] Try parseComponents
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created C1 - CAP
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created C2 - CAP
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created C3 - CAP
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created C4 - CAP
+[11.04.2024 16:46:16] Created PatType0 - 0805
+[11.04.2024 16:46:16] Created C5 - CAP
+[11.04.2024 16:46:16] Created PatType1 - MtHole
+[11.04.2024 16:46:16] Created Hole1 - MtHole
+[11.04.2024 16:46:16] Created PatType1 - MtHole
+[11.04.2024 16:46:16] Created Hole2 - MtHole
+[11.04.2024 16:46:16] Created PatType2 - CON_4
+[11.04.2024 16:46:16] Created J1 - CON_4M
+[11.04.2024 16:46:16] Created PatType3 - CON_6
+[11.04.2024 16:46:16] Created J2 - CON_6M
+[11.04.2024 16:46:16] Created PatType4 - SOT23-3P95_230X110L30X43N
+[11.04.2024 16:46:16] Created Q1 - TRANSISTOR_PNP
+[11.04.2024 16:46:16] Created PatType5 - RES_0805
+[11.04.2024 16:46:16] Created R1 - RES_0805
+[11.04.2024 16:46:16] Created PatType5 - RES_0805
+[11.04.2024 16:46:16] Created R2 - RES_0805
+[11.04.2024 16:46:16] Created PatType5 - RES_0805
+[11.04.2024 16:46:16] Created R3 - RES_0805
+[11.04.2024 16:46:16] Created PatType5 - RES_0805
+[11.04.2024 16:46:16] Created R4 - RES_0805
+[11.04.2024 16:46:16] Created PatType6 - SOIC16P127_1000X600X175L64X41L
+[11.04.2024 16:46:16] Created U1 - HX711
+[11.04.2024 16:46:16] Try parseBoard
+[11.04.2024 16:46:16] CAP Fill grid
+[11.04.2024 16:46:16] CAP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] CAP Fill grid
+[11.04.2024 16:46:16] CAP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] CAP Fill grid
+[11.04.2024 16:46:16] CAP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] CAP Fill grid
+[11.04.2024 16:46:16] CAP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] CAP Fill grid
+[11.04.2024 16:46:16] CAP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] MtHole Fill grid
+[11.04.2024 16:46:16] MtHole Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] MtHole Fill grid
+[11.04.2024 16:46:16] MtHole Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] CON_4M Fill grid
+[11.04.2024 16:46:16] CON_4M Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] 3 Pad Fill grid
+[11.04.2024 16:46:16] 4 Pad Fill grid
+[11.04.2024 16:46:16] CON_6M Fill grid
+[11.04.2024 16:46:16] CON_6M Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] 3 Pad Fill grid
+[11.04.2024 16:46:16] 4 Pad Fill grid
+[11.04.2024 16:46:16] 5 Pad Fill grid
+[11.04.2024 16:46:16] 6 Pad Fill grid
+[11.04.2024 16:46:16] TRANSISTOR_PNP Fill grid
+[11.04.2024 16:46:16] TRANSISTOR_PNP Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] 3 Pad Fill grid
+[11.04.2024 16:46:16] RES_0805 Fill grid
+[11.04.2024 16:46:16] RES_0805 Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] RES_0805 Fill grid
+[11.04.2024 16:46:16] RES_0805 Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] RES_0805 Fill grid
+[11.04.2024 16:46:16] RES_0805 Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] RES_0805 Fill grid
+[11.04.2024 16:46:16] RES_0805 Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] HX711 Fill grid
+[11.04.2024 16:46:16] HX711 Component Fill grid
+[11.04.2024 16:46:16] 1 Pad Fill grid
+[11.04.2024 16:46:16] 2 Pad Fill grid
+[11.04.2024 16:46:16] 3 Pad Fill grid
+[11.04.2024 16:46:16] 4 Pad Fill grid
+[11.04.2024 16:46:16] 5 Pad Fill grid
+[11.04.2024 16:46:16] 6 Pad Fill grid
+[11.04.2024 16:46:16] 7 Pad Fill grid
+[11.04.2024 16:46:16] 8 Pad Fill grid
+[11.04.2024 16:46:16] 9 Pad Fill grid
+[11.04.2024 16:46:16] 10 Pad Fill grid
+[11.04.2024 16:46:16] 11 Pad Fill grid
+[11.04.2024 16:46:16] 12 Pad Fill grid
+[11.04.2024 16:46:16] 13 Pad Fill grid
+[11.04.2024 16:46:16] 14 Pad Fill grid
+[11.04.2024 16:46:16] 15 Pad Fill grid
+[11.04.2024 16:46:16] 16 Pad Fill grid

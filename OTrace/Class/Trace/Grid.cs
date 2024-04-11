@@ -32,7 +32,7 @@ namespace OTrace.Class.Trace {
 
         }
 
-        public void makeGrid(double cellSize_ = 0.1) {//////////////
+        public void makeGrid(double cellSize_ = 0.2) {//////////////
             cellSize = cellSize_;
             padGrid = new bool[(int)Math.Round(plate.board.size.X / cellSize), (int)Math.Round(plate.board.size.Y / cellSize)];
 

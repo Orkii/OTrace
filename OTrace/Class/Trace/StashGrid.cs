@@ -23,6 +23,12 @@ namespace OTrace.Class.Trace {
                 }
             }
         }
+
+
+        private void addRouteGridInBypassing(RouteGrid routeGrid_) {
+            routeGrids.Add(routeGrid_);
+        }
+
         public void addRouteGrid(RouteGrid routeGrid_) {
             routeGrids.Add(routeGrid_);
 
@@ -42,12 +48,24 @@ namespace OTrace.Class.Trace {
         public StashGrid clone() {
             StashGrid sg = new StashGrid(grid);
             foreach (RouteGrid a in routeGrids) {
-                sg.addRouteGrid(a);
+                sg.addRouteGridInBypassing(a);
             }
+            sg.routeGrid = (bool[,])routeGrid.Clone();
             //sg.routeGrids = new List<RouteGrid>(routeGrids);
             return sg;
         }
+        public bool isOccupiedInRadius(int x, int y, double radius) {
+            int cellOccupiedRadius = (int)(Math.Floor(radius / grid.cellSize / 2));
+            int cellOccupiedDiametr = cellOccupiedRadius * 2;
 
+            for (int i = -cellOccupiedRadius; i > cellOccupiedRadius; i++) {
+                for (int j = -cellOccupiedRadius; j > cellOccupiedRadius; j++) {
+                    if (isOccupied(x + i, y + j) == true) return true;
+                }
+            }
+
+            return false;
+        }
         public bool isOccupied(int x, int y) {
             /*
             
@@ -65,11 +83,11 @@ namespace OTrace.Class.Trace {
 
             return routeGrid[x, y];
 
-                if (grid.padGrid[x, y] == true) return true;
-                foreach (RouteGrid a in routeGrids) {
-                    if (a.routeGrid[x, y] == true) return true;
-                }
-                return false;
+            if (grid.padGrid[x, y] == true) return true;
+            foreach (RouteGrid a in routeGrids) {
+                if (a.routeGrid[x, y] == true) return true;
+            }
+            return false;
             //}
             //catch {
             //    return true;
