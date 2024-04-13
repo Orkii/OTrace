@@ -11,7 +11,62 @@ namespace OTrace.Class.Trace {
         public Grid grid;
         public List<RouteGrid> routeGrids;
         bool[,] routeGrid;
+        public bool[,] routeGridWithRadius;
 
+        public void makeRadius(Net net) {
+            routeGridWithRadius = new bool[routeGrid.GetLength(0), routeGrid.GetLength(1)];
+
+            int cellOccupiedRadius = (int)(Math.Floor(net.routeWidth / grid.cellSize / 2));
+            int cellOccupiedDiametr = cellOccupiedRadius * 2;
+
+
+
+
+            for (int i = 0; i < routeGrid.GetLength(0); i++) {
+                for (int j = 0; j < routeGrid.GetLength(1); j++) {
+                    if (routeGrid[i, j] == true) {
+                        bool eee = false;
+                        foreach (Pad pad in net.pads) {
+
+                            if (pad.cellUsageL.Contains(new Point(i, j))) {
+                                eee = true;
+                                break;
+                            }
+                            //foreach (Point p in pad.cellUsageL) {
+                            //    if ((p.X == i) && (p.Y == j)) {
+                            //        eee = true;
+                            //        break;
+                            //    }
+                            //}
+                            //if (pad.cellUsage.Contains(new Point(i + x, j + y))) {
+                            //    eee = true;
+                            //    break;
+                            //}
+                        }
+                        if (eee == true) {
+                            continue;
+                        }
+
+
+                        for (int x = -cellOccupiedRadius; x <= cellOccupiedRadius; x++) {
+                            for (int y = -cellOccupiedRadius; y <= cellOccupiedRadius; y++) {
+                                
+                                
+
+
+                                if ((i + x < 0) || (i + x >= grid.padGrid.GetLength(0))) continue;
+                                if ((j + y < 0) || (j + y >= grid.padGrid.GetLength(1))) continue;
+                                routeGridWithRadius[i + x, j + y] = true;
+                            }
+                        }
+
+                    }
+                }
+            }
+            
+
+
+        }
 
         public StashGrid(Grid grid_) {
             grid = grid_;
@@ -41,7 +96,7 @@ namespace OTrace.Class.Trace {
 
         }
 
-        public bool isOccupied(Point p ) {
+        public bool isOccupied(Point p) {
             return isOccupied(p.X, p.Y);
         }
 
@@ -57,13 +112,13 @@ namespace OTrace.Class.Trace {
         public bool isOccupiedInRadius(int x, int y, double radius) {
             int cellOccupiedRadius = (int)(Math.Floor(radius / grid.cellSize / 2));
             int cellOccupiedDiametr = cellOccupiedRadius * 2;
-
-            for (int i = -cellOccupiedRadius; i > cellOccupiedRadius; i++) {
-                for (int j = -cellOccupiedRadius; j > cellOccupiedRadius; j++) {
+            
+            for (int i = -cellOccupiedRadius; i <= cellOccupiedRadius; i++) {
+                for (int j = -cellOccupiedRadius; j <= cellOccupiedRadius; j++) {
                     if (isOccupied(x + i, y + j) == true) return true;
                 }
             }
-
+            
             return false;
         }
         public bool isOccupied(int x, int y) {
@@ -80,8 +135,8 @@ namespace OTrace.Class.Trace {
             if ((x < 0) || (x >= grid.padGrid.GetLength(0))) return true;
             if ((y < 0) || (y >= grid.padGrid.GetLength(1))) return true;
             //try {
-
-            return routeGrid[x, y];
+            //return routeGrid[x, y];
+            return routeGridWithRadius[x, y];
 
             if (grid.padGrid[x, y] == true) return true;
             foreach (RouteGrid a in routeGrids) {
