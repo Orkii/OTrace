@@ -80,6 +80,64 @@ namespace OTrace.Class.Trace {
 
             //alreadyUsed.Add(p.point, p.distance);
             //pointsD.Add(p);
+
+            /*
+            if (pointsD.Count == 0) {
+                pointsD.Add(p);
+                alreadyUsed.Add(p.point, p);
+                return;
+            }
+
+            if (alreadyUsed.ContainsKey(p.point) == true) {
+                return;
+            }
+
+            foreach (Point a in alreadyUsed.Keys) {
+                if ((a.X == p.point.X) && (a.Y == p.point.Y)) {
+                    return;
+                }
+            }
+            //if (alreadyUsed.Count== 1) {
+            //    Console.WriteLine();
+            //}
+
+            //pointsD.Add(p);
+            //alreadyUsed.Add(p.point, p);
+            //return;
+
+            int step = pointsD.Count / 4;
+            int curPos = pointsD.Count / 2;
+            //Console.WriteLine(pointsD.Count);
+            while (true) {
+                if (pointsD[curPos].distance < p.distance) {
+                    curPos += step;
+                    step /= 2;
+                }
+                else {
+                    curPos -= step;
+                    step /= 2;
+                }
+                if (step <= 1) {
+                    pointsD.Insert(curPos, p);
+                    alreadyUsed.Add(p.point, p);
+
+                    return;
+                }
+            }
+            ///////
+
+            //Console.WriteLine(pointsD.Count);
+            //for (int i = 0; i < pointsD.Count; i ++) {
+            //    if (pointsD[i].distance > p.distance) {
+            //        pointsD.Insert(i, p);
+            //        alreadyUsed.Add(p.point, p);
+            //        return;///////
+            //    }
+            //}
+
+            //alreadyUsed.Add(p.point, p.distance);
+            //pointsD.Add(p); 
+            */
         }
 
         public Point pick() {

@@ -43,9 +43,10 @@ namespace OTrace.Class {
                 if (p.X > maxX) maxX = p.X;
                 if (p.X < minX) minX = p.X;
                 if (p.Y > maxY) maxY = p.Y;
-                if (p.Y < minY) minX = p.Y;
+                if (p.Y < minY) minY = p.Y;
+                
             }
-            size = new Vector2((float)maxX, (float)maxY);
+            size = new Vector2((float)(maxX - minX), (float)(maxY - minY));
         }
         public void paint(object sender, PaintEventArgs e, Vector3 panelOffset) {
             List<PointF> pointsToDraw = new List<PointF>();

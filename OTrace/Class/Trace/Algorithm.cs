@@ -42,6 +42,7 @@ namespace OTrace.Class.Trace {
         public Plate plate;
         public Grid grid;
 
+        int maxIterCount = 100;
 
         List<Net> netList;
 
@@ -64,7 +65,7 @@ namespace OTrace.Class.Trace {
                 grid.paint(sender, e, panelOffset);
             }
 
-            if (inWork == true) return;
+            //if (inWork == true) return;
 
             int c = 0; // Для разных цветов
             List<Net> netList_ = new List<Net>(netList);
@@ -172,7 +173,7 @@ namespace OTrace.Class.Trace {
         Point nowPoint;
         public void alg(int netID = -1) {
             clearInfoText();
-
+            iterCount = 0;
             writeInfoText("общее количество сетей = " + netList.Count);
 
             StashGrid stashGrid = new StashGrid(grid);
@@ -223,10 +224,13 @@ namespace OTrace.Class.Trace {
             toDraw.Invalidate();
         }
         int deep = 0;
+        int iterCount = 0;
         private bool recursiveRouteFinder(StashGrid stashGrid, List<Net> nets) {
+            
+            iterCount++;
             //clearInfoText();
+            //if (nets.Count == 0) return true;
             if (nets.Count == 0) return true;
-
             writeInfoText(deep.ToString() + " ");
             deep++;
             List<Net> wasTry = new List<Net>(); // Эти сети были попробываны 
@@ -250,7 +254,7 @@ namespace OTrace.Class.Trace {
                     temp2.Add(item, sg);
                 }
             }
-
+            //if (iterCount > maxIterCount) return false;
             nets.Sort();
 
             Net nowNet; // Сеть которая сейчас в рекурсии
