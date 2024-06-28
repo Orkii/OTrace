@@ -22,7 +22,6 @@ namespace OTrace.Class.Trace {
         public double cellSize;
         Plate plate;
 
-
         public int height { get => padGrid.GetLength(0); }
         public int width  { get => padGrid.GetLength(1); }
 

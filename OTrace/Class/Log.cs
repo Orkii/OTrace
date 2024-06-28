@@ -9,10 +9,11 @@ using System.Windows.Forms;
 
 namespace OTrace.Class {
     static class Log {
-        static private string logFilePath = "E:\\Диплом\\OTrace\\Log.txt";
+        static private string logFilePath = "C:\\Диплом\\OTrace\\Log.txt";
         static StreamWriter sw;
 
         static Log() {
+            return;
             Application.ApplicationExit += end;
             Application.ThreadException += smthGoWrong;
 
@@ -23,15 +24,18 @@ namespace OTrace.Class {
         }
 
         public static void log(string str, bool writeToConsole = true) {
+            return;
             sw.WriteLine("[" + DateTime.Now + "] " + str);
             if (writeToConsole == false) return;
             Console.WriteLine(str);
         }
 
         public static void end(object sender, EventArgs e) {
+            return;
             sw.Close();
         }
         static void smthGoWrong(object sender, ThreadExceptionEventArgs t) {
+            return;
             sw.WriteLine(t.Exception);
             sw.Close();
         }

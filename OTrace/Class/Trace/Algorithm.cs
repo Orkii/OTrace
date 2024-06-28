@@ -65,7 +65,8 @@ namespace OTrace.Class.Trace {
                 grid.paint(sender, e, panelOffset);
             }
 
-            //if (inWork == true) return;
+            if (inWork == true) return;
+
 
             int c = 0; // Для разных цветов
             List<Net> netList_ = new List<Net>(netList);
@@ -73,11 +74,11 @@ namespace OTrace.Class.Trace {
                 if (net.routePoints.Count != 0) {
                     c++;  // Для разных цветов
                     foreach (Point routePoint in net.routePoints)
-                    e.Graphics.FillRectangle(new SolidBrush(Color.Blue),
-                        (float)(panelOffset.X + (routePoint.X * grid.cellSize) * panelOffset.Z),
-                        (float)(panelOffset.Y + ((Panel)sender).Size.Height - (routePoint.Y * grid.cellSize) * panelOffset.Z),
-                        (float)grid.cellSize * panelOffset.Z,
-                        (float)grid.cellSize * panelOffset.Z);
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Blue),
+                            (float)(panelOffset.X + (routePoint.X * grid.cellSize) * panelOffset.Z),
+                            (float)(panelOffset.Y + ((Panel)sender).Size.Height - (routePoint.Y * grid.cellSize) * panelOffset.Z),
+                            (float)grid.cellSize * panelOffset.Z,
+                            (float)grid.cellSize * panelOffset.Z);
                     /*
                      e.Graphics.FillEllipse(new SolidBrush(Color.Blue),
                         (float)(panelOffset.X + (routePoint.X * grid.cellSize - grid.cellSize / 2) * panelOffset.Z),
@@ -86,32 +87,37 @@ namespace OTrace.Class.Trace {
                         (float)grid.cellSize * panelOffset.Z);
                      */
                 }
-                for (int i = 1; i < net.pads.Count; i++) {
+                if (settings.showGreenLine == true) {
 
-                    Pad pad1 = net.pads[i - 1];
-                    Pad pad2 = net.pads[i];
 
-                    PointF p1 = new PointF(pad1.position.X, pad1.position.Y);
-                    PointF p2 = new PointF(pad2.position.X, pad2.position.Y);
-                    {
-                        Vector2 newOffset = Vector2.Transform(pad1.offset, Matrix3x2.CreateRotation((float)pad1.angle__));
-                        p1 = new PointF(
-                            panelOffset.X + (pad1.position.X + newOffset.X) * panelOffset.Z,
-                            panelOffset.Y + ((Panel)sender).Size.Height - (pad1.position.Y + newOffset.Y) * panelOffset.Z);
+
+                    for (int i = 1; i < net.pads.Count; i++) {
+
+                        Pad pad1 = net.pads[i - 1];
+                        Pad pad2 = net.pads[i];
+
+                        PointF p1 = new PointF(pad1.position.X, pad1.position.Y);
+                        PointF p2 = new PointF(pad2.position.X, pad2.position.Y);
+                        {
+                            Vector2 newOffset = Vector2.Transform(pad1.offset, Matrix3x2.CreateRotation((float)pad1.angle__));
+                            p1 = new PointF(
+                                panelOffset.X + (pad1.position.X + newOffset.X) * panelOffset.Z,
+                                panelOffset.Y + ((Panel)sender).Size.Height - (pad1.position.Y + newOffset.Y) * panelOffset.Z);
+                        }
+                        {
+                            Vector2 newOffset = Vector2.Transform(pad2.offset, Matrix3x2.CreateRotation((float)pad2.angle__));
+                            p2 = new PointF(
+                                panelOffset.X + (pad2.position.X + newOffset.X) * panelOffset.Z,
+                                panelOffset.Y + ((Panel)sender).Size.Height - (pad2.position.Y + newOffset.Y) * panelOffset.Z);
+                        }
+                        //p1.X = p1.X * panelOffset.Z + panelOffset.X;
+                        //p1.Y = -p1.Y * panelOffset.Z + panelOffset.Y + ((Panel)sender).Size.Height;
+                        //
+                        //p2.X = p2.X * panelOffset.Z + panelOffset.X;
+                        //p2.Y = -p1.Y * panelOffset.Z + panelOffset.Y + ((Panel)sender).Size.Height;
+
+                        e.Graphics.DrawLine(new Pen(Color.Green), p1, p2);
                     }
-                    {
-                        Vector2 newOffset = Vector2.Transform(pad2.offset, Matrix3x2.CreateRotation((float)pad2.angle__));
-                        p2 = new PointF(
-                            panelOffset.X + (pad2.position.X + newOffset.X) * panelOffset.Z,
-                            panelOffset.Y + ((Panel)sender).Size.Height - (pad2.position.Y + newOffset.Y) * panelOffset.Z);
-                    }
-                    //p1.X = p1.X * panelOffset.Z + panelOffset.X;
-                    //p1.Y = -p1.Y * panelOffset.Z + panelOffset.Y + ((Panel)sender).Size.Height;
-                    //
-                    //p2.X = p2.X * panelOffset.Z + panelOffset.X;
-                    //p2.Y = -p1.Y * panelOffset.Z + panelOffset.Y + ((Panel)sender).Size.Height;
-
-                    e.Graphics.DrawLine(new Pen(Color.Green), p1, p2);
                 }
             }
             /* // Рисованеи Проверенных клеток
@@ -142,6 +148,9 @@ namespace OTrace.Class.Trace {
                 foreach (Pad pad in comp.patternStyle.padList) {
                     if (pad.netId != -1) {
                         pad.color = Color.Black;// colors[pad.netId];
+                    }
+                    else {
+                        continue;
                     }
                     bool isNetWithSameIdExist = false;
                     foreach (Net net in netList){
@@ -180,8 +189,15 @@ namespace OTrace.Class.Trace {
             stashGrid.grid = grid;
             bool able = true;
 
-            foreach (Net net in netList) {
+
+
+            List<Net> list = new List<Net>();
+            maxIterCount = netList.Count * 10;
+            foreach (Net nn in netList) {
+                list.Add(nn);
             }
+            //foreach (Net net in netList) {
+            //}
             /*
             foreach (Net net in netList) {       // Проверка возможности каждой отдельной
                 if (net.id != -1) {
@@ -194,11 +210,32 @@ namespace OTrace.Class.Trace {
                 }
             }
             */
+
+
+            int cellUsageBefore = 0;
+            int cellUsageAfter = 0;
+            foreach (Net item in netList){
+                foreach(Pad pad in item.pads){
+                    cellUsageBefore += pad.cellUsageL.Count();
+                }
+            }
+
+
+            List<Net> tempList = new List<Net>();
+            tempList.AddRange(netList);
+
             if (able == false) return;
             else writeInfoText("Поиск пути");
             inWork = true;
             if (netID == -1) {
-                recursiveRouteFinder(stashGrid, netList);
+                if (recursiveRouteFinder(stashGrid, tempList) == false) {
+                    clearInfoText();
+                    writeInfoText("Не удалось найти трассировку.");
+                    //netList = list;
+                    inWork = false;
+                    toDraw.Invalidate();
+                    return;
+                }
                 /*
                 foreach (Net net in netList) {
                     if (net.id != -1) {
@@ -215,23 +252,49 @@ namespace OTrace.Class.Trace {
                         findMultyRoute(stashGrid, net);
                         toDraw.Invalidate();
                     }
-                }
+            4    }
                 //findSingleRoute(netID);
                 */
             }
-            Console.WriteLine("DONE");
+
+            foreach (Net r in netList) {
+                cellUsageAfter += r.totalLength;
+            }
+            //
+            //if (iterCount >= netList.Count * 10) {
+            //    clearInfoText();
+            //    writeInfoText("Не удалось найти трассировку.");
+            //    
+            //    foreach (Net n in netList) {
+            //        //n.routePoints = null;
+            //    }
+            //    inWork = false;
+            //    toDraw.Invalidate();
+            //    return;
+            //}
+            
+
+            Console.WriteLine("Завершено!");
+            clearInfoText();
+            writeInfoText("Завершено!\nОбщая длина дорожек: " + ((cellUsageAfter - cellUsageBefore) * grid.cellSize) + "мм");
             inWork = false;
             toDraw.Invalidate();
         }
         int deep = 0;
         int iterCount = 0;
+
         private bool recursiveRouteFinder(StashGrid stashGrid, List<Net> nets) {
             
             iterCount++;
             //clearInfoText();
             //if (nets.Count == 0) return true;
-            if (nets.Count == 0) return true;
-            writeInfoText(deep.ToString() + " ");
+            if (iterCount >= maxIterCount) return false;
+            if (nets.Count == 0) {
+                return true;
+            }
+
+            clearInfoText();
+            writeInfoText("Итераций: " + iterCount + "\nГлубина просмотра" + deep.ToString() + "\\" + netList.Count());
             deep++;
             List<Net> wasTry = new List<Net>(); // Эти сети были попробываны 
             wasTry.Sort();
@@ -252,10 +315,14 @@ namespace OTrace.Class.Trace {
                     temp1.Add(item, item.routePoints);
                     //StashGrid sg1 = stashGrid.clone();
                     temp2.Add(item, sg);
+                    
                 }
             }
             //if (iterCount > maxIterCount) return false;
             nets.Sort();
+            //foreach (Net item in nets) {
+            //    item.routePoints.Clear();
+            //}
 
             Net nowNet; // Сеть которая сейчас в рекурсии
 
@@ -272,6 +339,8 @@ namespace OTrace.Class.Trace {
                 tempList.AddRange(wasTry);
 
                 if (recursiveRouteFinder(stashGridNewState, tempList) == true) {
+                    //wasTry.Add(nowNet);//
+                    nets.Add(nowNet);//
                     deep--;
                     return true;
                 }
@@ -300,6 +369,9 @@ namespace OTrace.Class.Trace {
 
             }
             deep--;
+
+
+
             return false;
         }
 
@@ -313,11 +385,43 @@ namespace OTrace.Class.Trace {
             if (stashGrid.routeGridWithRadius == null) {
                 Console.WriteLine();
             }
-            for (int i = 1; i < net.pads.Count; i++) {
-                List<Point>  newPs = findWayFromArrToArr(stashGrid, ps, net.pads[i].cellUsageL, net);
+            ////
+            List<Pad> p = new List<Pad>();
+            for (int i = 0; i < net.pads.Count; i++) {
+                p.Add(net.pads[i]); 
+            }
+            p.RemoveAt(0);
+            List<Pad> sortedPads = new List<Pad>();
+            int k = 0;
+            while (p.Count != 0) {
+                int min = int.MaxValue;
+                int indexI = -1;
+                for (int i = 0; i < p.Count; i++) {
+                    if (p[i].cellUsageL.Count == 0) continue;
+                    if (net.pads[0].cellUsageL[0].X - p[i].cellUsageL[0].X + net.pads[0].cellUsageL[0].Y - p[i].cellUsageL[0].Y < min) {
+                        min = net.pads[0].cellUsageL[0].X - p[i].cellUsageL[0].X + net.pads[0].cellUsageL[0].Y - p[i].cellUsageL[0].Y;
+                        indexI = i;
+                    }
+                }
+                if (indexI == -1) break;
+                sortedPads.Insert(k, p[indexI]);
+                p.RemoveAt(indexI);
+                k++;
+            }
+           
+
+
+            for (int i = 0; i < sortedPads.Count; i++) {
+                List<Point> newPs = findWayFromArrToArr(stashGrid, ps, sortedPads[i].cellUsageL, net);
                 if (newPs == null) return false;//
                 else ps = newPs;
             }
+
+            //for (int i = 1; i < net.pads.Count; i++) {
+            //    List<Point>  newPs = findWayFromArrToArr(stashGrid, ps, net.pads[i].cellUsageL, net);
+            //    if (newPs == null) return false;//
+            //    else ps = newPs;
+            //}
 
             net.routePoints = ps;
             RouteGrid gr = new RouteGrid(ps, grid.padGrid.GetLength(0), grid.padGrid.GetLength(1));
@@ -520,7 +624,7 @@ namespace OTrace.Class.Trace {
                 infoRB.Invoke(safeWrite);
             }
             else {
-                infoRB.AppendText(text);
+                    infoRB.AppendText(text);
                 infoRB.ScrollToCaret();
             }
         }

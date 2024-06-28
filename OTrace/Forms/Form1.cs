@@ -19,12 +19,13 @@ using System.Reflection;
 using OTrace.Class.Trace;
 using System.Collections;
 using System.Threading;
+using System.Diagnostics;
 
 namespace OTrace {
     public partial class Form1 : Form {
 
         //static string filePath = "E:\\Диплом\\Plate\\Empty.dipxml";
-        static string filePath = "E:\\Диплом\\Plate\\Empty.dipxml";
+        static string filePath = "C:\\Диплом\\Plate\\Empty.dipxml";
         List<Component> list = new List<Component>();
 
         List<PadStyle> padStylesList;
@@ -46,7 +47,7 @@ namespace OTrace {
 
             panelOffset = new Vector3(0,0,10);
 
-            openFile(filePath);
+            //openFile(filePath);
         }
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -54,14 +55,26 @@ namespace OTrace {
         }
 
         private void открытьToolStripMenuItem1_Click(object sender, EventArgs e) {
+
+            Stopwatch stopwatch = new Stopwatch();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "dipxml (*.dipxml)|*.dipxml";
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                filePath = openFileDialog.FileName;
-                openFile(openFileDialog.FileName);
+            try {
+                if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                    stopwatch.Start();
+                    filePath = openFileDialog.FileName;
+                    openFile(openFileDialog.FileName);
+                }
             }
-
-
+            catch {
+                algorithm = null;
+                MessageBox.Show("Не удалось загрузить плату.", "Ошибка!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            stopwatch.Stop();
+            Console.WriteLine("Загрузка заняла " + stopwatch.ElapsedMilliseconds.ToString() + " милисекунд.");
+            panel1.Invalidate();
+            infoRB.Text = "";
 
 
         }
@@ -133,7 +146,9 @@ namespace OTrace {
 
         }
         private void panel1_Paint(object sender, PaintEventArgs e) {
-            algorithm.paint(sender, e, panelOffset);
+            if (algorithm != null) {
+                algorithm.paint(sender, e, panelOffset);
+            }
         }
 
 
@@ -190,9 +205,17 @@ namespace OTrace {
             if (algorithm != null) algorithm.settings.showGrid = showGridBox.Checked;
             panel1.Invalidate();
         }
-
+        private void showGreenLine_CheckedChanged(object sender, EventArgs e) {
+            if (algorithm != null) algorithm.settings.showGreenLine = showGreenLine.Checked;
+            panel1.Invalidate();
+        }
         private void button1_Click(object sender, EventArgs e) {
 
+            if (algorithm == null) {
+                MessageBox.Show("Не загружена плата.", "Ошибка!",
+                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Thread th = new Thread(new ThreadStart(() => {
                 algorithm.alg((int)(numericUpDown1.Value));
             }));
@@ -201,6 +224,14 @@ namespace OTrace {
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) {
+
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e) {
 
         }
     }

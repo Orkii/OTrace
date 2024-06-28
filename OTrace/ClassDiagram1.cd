@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="OTrace.Class.Trace.Algorithm">
+    <Position X="0.5" Y="0.5" Width="3.75" />
+    <AssociationLine Name="netList" Type="OTrace.Class.Trace.Net" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.625" Y="5.132" />
+        <Point X="3.625" Y="7.375" />
+        <Point X="5.854" Y="7.375" Type="JumpStart" />
+        <Point X="6.021" Y="7.375" Type="JumpEnd" />
+        <Point X="8.75" Y="7.375" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgAIAECAQNBIAAAAAAAAAAAAACAgECACAAACACCAIA=</HashCode>
+      <FileName>Class\Trace\Algorithm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="settings" />
+      <Field Name="plate" />
+      <Field Name="grid" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="netList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OTrace.Class.Trace.AlgoritmSettins">
+    <Position X="5.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAABAAAA=</HashCode>
+      <FileName>Class\Trace\AlgoritmSettins.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OTrace.Class.Trace.Net" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAgAIAAAAAAAAAAAAAAgAAAgA=</HashCode>
+      <FileName>Class\Trace\Net.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="pads" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OTrace.Class.Trace.Plate">
+    <Position X="0.5" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Class\Trace\Plate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="board" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="components" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OTrace.Class.Trace.RouteGrid">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Trace\RouteGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OTrace.Class.Trace.StashGrid">
+    <Position X="8.75" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAAAIAAAACAAgAAAAAAAAgAAIEAAAAEAgAAAA=</HashCode>
+      <FileName>Class\Trace\StashGrid.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="grid" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="routeGrids" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OTrace.Component">
+    <Position X="4.25" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAggAAAAEAAAAYBAAAAAEEAAAABAAAABAAAA=</HashCode>
+      <FileName>Class\Component.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="patternStyle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OTrace.Class.Board">
+    <Position X="0.5" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgAAACAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Board.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OTrace.Class.Pad">
+    <Position X="11.5" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAiAAAAAAigCAAAIAAAAIBAAAAAEAACAAAAAAABEAgA=</HashCode>
+      <FileName>Class\Pad.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="style" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OTrace.Class.PadPattern">
+    <Position X="7.75" Y="8.75" Width="2.25" />
+    <Members>
+      <Field Name="holeList" Hidden="true" />
+      <Field Name="padStyleList" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAAAgAAAAAAAAAAAIIAAAEAAIAABAAAAAAAAA=</HashCode>
+      <FileName>Class\PadPattern.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="padList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OTrace.PadStyle">
+    <Position X="14.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAEAIAAAAAAAAAFAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Class\PadStyle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OTrace.Class.Trace.Grid">
+    <Position X="5.25" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAQAUAAAQAAAAAAAAAAACAAAAIAAAAA=</HashCode>
+      <FileName>Class\Trace\Grid.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="plate" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OTrace.Form1">
+    <Position X="14" Y="2.25" Width="2.25" />
+    <Members>
+      <Field Name="button1" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="ComponentTree" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="Form1" Hidden="true" />
+      <Field Name="infoRB" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="labelComponents" Hidden="true" />
+      <Field Name="list" Hidden="true" />
+      <Field Name="menuStrip1" Hidden="true" />
+      <Field Name="mousePosL" Hidden="true" />
+      <Field Name="numericUpDown1" Hidden="true" />
+      <Field Name="padStylesList" Hidden="true" />
+      <Field Name="panel1" Hidden="true" />
+      <Field Name="showGreenLine" Hidden="true" />
+      <Field Name="showGridBox" Hidden="true" />
+      <Method Name="showGridBox_CheckedChanged" Hidden="true" />
+      <Field Name="showPlateBox" Hidden="true" />
+      <Method Name="showPlateBox_CheckedChanged" Hidden="true" />
+      <Field Name="splitContainer1" Hidden="true" />
+      <Field Name="toolStrip1" Hidden="true" />
+      <Field Name="открытьToolStripMenuItem" Hidden="true" />
+      <Field Name="открытьToolStripMenuItem1" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>hbAAAgEKACEEABgAAWCDgAQ6QAAICUAACHQAAQGAMGE=</HashCode>
+      <FileName>Forms\Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

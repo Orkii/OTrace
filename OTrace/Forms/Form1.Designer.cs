@@ -27,10 +27,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ComponentTree = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.labelComponents = new System.Windows.Forms.Label();
+            this.showGreenLine = new System.Windows.Forms.CheckBox();
             this.showGridBox = new System.Windows.Forms.CheckBox();
             this.showPlateBox = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -68,8 +68,7 @@
             // открытьToolStripMenuItem
             // 
             this.открытьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.открытьToolStripMenuItem1,
-            this.сохранитьToolStripMenuItem});
+            this.открытьToolStripMenuItem1});
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.открытьToolStripMenuItem.Text = "Файл";
@@ -78,16 +77,9 @@
             // открытьToolStripMenuItem1
             // 
             this.открытьToolStripMenuItem1.Name = "открытьToolStripMenuItem1";
-            this.открытьToolStripMenuItem1.Size = new System.Drawing.Size(133, 22);
+            this.открытьToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.открытьToolStripMenuItem1.Text = "Открыть";
             this.открытьToolStripMenuItem1.Click += new System.EventHandler(this.открытьToolStripMenuItem1_Click);
-            // 
-            // сохранитьToolStripMenuItem
-            // 
-            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.сохранитьToolStripMenuItem.Text = "Сохранить";
-            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
             // 
             // ComponentTree
             // 
@@ -96,7 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComponentTree.Location = new System.Drawing.Point(3, 27);
             this.ComponentTree.Name = "ComponentTree";
-            this.ComponentTree.Size = new System.Drawing.Size(193, 280);
+            this.ComponentTree.Size = new System.Drawing.Size(193, 261);
             this.ComponentTree.TabIndex = 3;
             // 
             // splitContainer1
@@ -115,10 +107,12 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.showGreenLine);
             this.splitContainer1.Panel2.Controls.Add(this.showGridBox);
             this.splitContainer1.Panel2.Controls.Add(this.showPlateBox);
-            this.splitContainer1.Size = new System.Drawing.Size(201, 532);
-            this.splitContainer1.SplitterDistance = 312;
+            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
+            this.splitContainer1.Size = new System.Drawing.Size(201, 501);
+            this.splitContainer1.SplitterDistance = 293;
             this.splitContainer1.TabIndex = 5;
             // 
             // labelComponents
@@ -127,22 +121,35 @@
             this.labelComponents.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelComponents.Location = new System.Drawing.Point(3, 0);
             this.labelComponents.Name = "labelComponents";
-            this.labelComponents.Size = new System.Drawing.Size(118, 24);
+            this.labelComponents.Size = new System.Drawing.Size(124, 24);
             this.labelComponents.TabIndex = 4;
-            this.labelComponents.Text = "Components";
+            this.labelComponents.Text = "Компоненты";
+            // 
+            // showGreenLine
+            // 
+            this.showGreenLine.AutoSize = true;
+            this.showGreenLine.Checked = true;
+            this.showGreenLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGreenLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.showGreenLine.Location = new System.Drawing.Point(9, 3);
+            this.showGreenLine.Name = "showGreenLine";
+            this.showGreenLine.Size = new System.Drawing.Size(170, 28);
+            this.showGreenLine.TabIndex = 2;
+            this.showGreenLine.Text = "Показать связи";
+            this.showGreenLine.UseVisualStyleBackColor = true;
+            this.showGreenLine.CheckedChanged += new System.EventHandler(this.showGreenLine_CheckedChanged);
             // 
             // showGridBox
             // 
             this.showGridBox.AutoSize = true;
-            this.showGridBox.Checked = true;
-            this.showGridBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showGridBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.showGridBox.Location = new System.Drawing.Point(7, 37);
+            this.showGridBox.Location = new System.Drawing.Point(9, 71);
             this.showGridBox.Name = "showGridBox";
-            this.showGridBox.Size = new System.Drawing.Size(114, 28);
+            this.showGridBox.Size = new System.Drawing.Size(167, 28);
             this.showGridBox.TabIndex = 1;
-            this.showGridBox.Text = "Show grid";
+            this.showGridBox.Text = "Показать сетку";
             this.showGridBox.UseVisualStyleBackColor = true;
+            this.showGridBox.Visible = false;
             this.showGridBox.CheckedChanged += new System.EventHandler(this.showGridBox_CheckedChanged);
             // 
             // showPlateBox
@@ -151,12 +158,13 @@
             this.showPlateBox.Checked = true;
             this.showPlateBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showPlateBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.showPlateBox.Location = new System.Drawing.Point(9, 3);
+            this.showPlateBox.Location = new System.Drawing.Point(9, 37);
             this.showPlateBox.Name = "showPlateBox";
-            this.showPlateBox.Size = new System.Drawing.Size(123, 28);
+            this.showPlateBox.Size = new System.Drawing.Size(168, 28);
             this.showPlateBox.TabIndex = 0;
-            this.showPlateBox.Text = "Show Plate";
+            this.showPlateBox.Text = "Показать плату";
             this.showPlateBox.UseVisualStyleBackColor = true;
+            this.showPlateBox.Visible = false;
             this.showPlateBox.CheckedChanged += new System.EventHandler(this.showPlateBox_CheckedChanged);
             // 
             // panel1
@@ -187,13 +195,14 @@
             this.mousePosL.Size = new System.Drawing.Size(70, 26);
             this.mousePosL.TabIndex = 7;
             this.mousePosL.Text = "label1";
+            this.mousePosL.Visible = false;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(13, 28);
+            this.button1.Location = new System.Drawing.Point(12, 28);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(200, 39);
+            this.button1.Size = new System.Drawing.Size(200, 34);
             this.button1.TabIndex = 8;
             this.button1.Text = "Начать поиск";
             this.button1.UseVisualStyleBackColor = true;
@@ -201,8 +210,9 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(13, 73);
+            this.numericUpDown1.Location = new System.Drawing.Point(12, 68);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             1,
             0,
@@ -211,12 +221,21 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(200, 29);
             this.numericUpDown1.TabIndex = 9;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown1.Visible = false;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // infoRB
             // 
-            this.infoRB.Location = new System.Drawing.Point(12, 641);
+            this.infoRB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.infoRB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.infoRB.Location = new System.Drawing.Point(12, 610);
             this.infoRB.Name = "infoRB";
-            this.infoRB.Size = new System.Drawing.Size(197, 91);
+            this.infoRB.Size = new System.Drawing.Size(197, 122);
             this.infoRB.TabIndex = 10;
             this.infoRB.Text = "";
             // 
@@ -225,17 +244,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1111, 787);
-            this.Controls.Add(this.infoRB);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.mousePosL);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.infoRB);
+            this.Controls.Add(this.mousePosL);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "OTrace";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -257,7 +276,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.TreeView ComponentTree;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label labelComponents;
@@ -268,6 +286,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.RichTextBox infoRB;
+        private System.Windows.Forms.CheckBox showGreenLine;
     }
 }
 
